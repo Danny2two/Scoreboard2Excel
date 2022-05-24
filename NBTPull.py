@@ -80,7 +80,7 @@ def exportscore(search_terms, path_to_scoreboard_dat = "scorboard.dat", exportfi
                 if not exists(ExcelOutputName):
                     with pd.ExcelWriter(ExcelOutputName,engine="openpyxl") as writer:  # export it to an excel sheet
                         excelsheet.to_excel(writer, sheet_name=lookfor, index=False)
-                    print("Error, Expected file "+ ExcelOutputName + " was not found! Creating it!.")
+                    print("Expected file "+ ExcelOutputName + " was not found! Creating it!.")
                 else:
                     with pd.ExcelWriter(ExcelOutputName, mode="a", if_sheet_exists="replace",engine="openpyxl") as writer:  # export it to an excel sheet
                         excelsheet.to_excel(writer, sheet_name=lookfor, index=False)
@@ -89,4 +89,21 @@ def exportscore(search_terms, path_to_scoreboard_dat = "scorboard.dat", exportfi
                 print("Error: Names list empty, perhaps your serch term does not exist or has a typo.")
 
 
-exportscore(search_terms=("ts_Walk","ts_Jump","ts_Sprint"),path_to_scoreboard_dat="scoreboard.dat",exportfilename = "test.xlsx")
+#exportscore(search_terms=("ts_Walk","ts_Jump","ts_Sprint"),path_to_scoreboard_dat="scoreboard.dat",exportfilename = "test.xlsx")
+
+
+if __name__ == '__main__':
+    get = input("What Scoreboard's to get? seperate with comma ")
+    list = []
+    temp = ""
+    for i in get:
+        if i ==",":
+            list.append(temp)
+            temp = ""
+        else:
+            temp += i
+    list.append(temp)
+
+    path = input("Path to scoreboard.dat?: ")
+    exportname = input("Exportfilename?: ")
+    exportscore(search_terms=list, path_to_scoreboard_dat="scoreboard.dat",exportfilename=exportname)
